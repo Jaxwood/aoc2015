@@ -19,13 +19,13 @@ describe('day1', () => {
   });
 
   it('day1a input should equal 280', async () => {
-    const input = await fsReadfilePromise('./src/day1/input.txt', 'utf-8');
+    const input = await fsReadfilePromise('./src/day01/input.txt', 'utf-8');
     const actual = day1a(input);
     expect(actual).toBe(280);
   });
 
   it('day1b input should equal 1797', async () => {
-    const input = await fsReadfilePromise('./src/day1/input.txt', 'utf-8');
+    const input = await fsReadfilePromise('./src/day01/input.txt', 'utf-8');
     const actual = day1b(input);
     expect(actual).toBe(1797);
   });
