@@ -22,10 +22,9 @@ function paperSize(input: string): number {
 }
 
 function ribonSize(input: string): number {
-  const sides = input
+  const [l, w, h] = input
     .split('x')
     .map(toInt)
     .sort((a, b) => a - b);
-  const [l, w, h] = sides;
   return 2 * l + 2 * w + l * w * h;
 }
