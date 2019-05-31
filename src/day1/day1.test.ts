@@ -1,5 +1,5 @@
 import fsReadfilePromise from 'fs-readfile-promise';
-import { day1 } from './day1';
+import { day1a, day1b } from './day1';
 
 describe('day1', () => {
   const testCases = [
@@ -12,15 +12,21 @@ describe('day1', () => {
     [')))', '-3'],
     [')())())', '-3'],
   ];
-  describe.each(testCases)('%s', (input, expected) => {
-    it(`should equal ${expected}`, () => {
-      expect(day1(input)).toBe(parseInt(expected, 10));
+  describe.each(testCases)('a', (input, expected) => {
+    it(`${input} should equal ${expected}`, () => {
+      expect(day1a(input)).toBe(parseInt(expected, 10));
     });
   });
 
-  it('day1 input should equal 280', async () => {
+  it('day1a input should equal 280', async () => {
     const input = await fsReadfilePromise('./src/day1/input.txt', 'utf-8');
-    const actual = day1(input);
+    const actual = day1a(input);
     expect(actual).toBe(280);
+  });
+
+  it('day1b input should equal 1797', async () => {
+    const input = await fsReadfilePromise('./src/day1/input.txt', 'utf-8');
+    const actual = day1b(input);
+    expect(actual).toBe(1797);
   });
 });
