@@ -1,9 +1,21 @@
 import { Sut } from './day1';
 
+interface TestCase {
+  expected: number;
+  pattern: string;
+}
 describe('day1', () => {
   it('should do something', () => {
     const sut = new Sut();
-    const actual = sut.day1('(())');
-    expect(actual).toBe(0);
+    const input: TestCase[] = [
+      {
+        expected: 0,
+        pattern: '(())',
+      },
+    ];
+    for (const testcase of input) {
+      const actual = sut.day1(testcase.pattern);
+      expect(actual).toBe(testcase.expected);
+    }
   });
 });
