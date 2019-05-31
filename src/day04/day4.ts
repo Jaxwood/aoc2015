@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-export function day4a(input: string): number {
+export function day4(until: number, input: string): number {
   let hex = input;
 
   let cnt = 0;
@@ -8,15 +8,15 @@ export function day4a(input: string): number {
     const md5 = crypto.createHash('MD5');
     md5.update(`${input}${cnt}`);
     hex = md5.digest('hex');
-    if (fiveZeros(hex)) {
+    if (zeroes(until, hex)) {
       return cnt;
     }
     cnt++;
   }
 }
 
-function fiveZeros(input: string): boolean {
-  for (let i = 0; i < 5; i++) {
+function zeroes(until: number, input: string): boolean {
+  for (let i = 0; i < until; i++) {
     if (input[i] !== '0') {
       return false;
     }
