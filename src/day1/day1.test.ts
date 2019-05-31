@@ -5,12 +5,44 @@ interface TestCase {
   pattern: string;
 }
 describe('day1', () => {
-  it('should do something', () => {
+  it('should calculate floors', () => {
     const sut = new Sut();
     const input: TestCase[] = [
       {
         expected: 0,
         pattern: '(())',
+      },
+      {
+        expected: 0,
+        pattern: '()()',
+      },
+      {
+        expected: 3,
+        pattern: '(((',
+      },
+      {
+        expected: 3,
+        pattern: '(()(()(',
+      },
+      {
+        expected: 3,
+        pattern: '))(((((',
+      },
+      {
+        expected: -1,
+        pattern: '())',
+      },
+      {
+        expected: -1,
+        pattern: '))(',
+      },
+      {
+        expected: -3,
+        pattern: ')))',
+      },
+      {
+        expected: -3,
+        pattern: ')())())',
       },
     ];
     for (const testcase of input) {
