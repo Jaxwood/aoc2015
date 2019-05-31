@@ -27,18 +27,16 @@ export function day5b(input: string[]): number {
 }
 
 function hasPair(candidate: string): boolean {
-  const pairs = new Set<string>();
-  const prevPair = new Map<string, number>();
+  const pairs = new Map<string, number>();
   for (let i = 0; i < candidate.length - 1; i++) {
     const key = JSON.stringify([candidate[i], candidate[i + 1]]);
     if (pairs.has(key)) {
-      const prevIndex = prevPair.get(key) || 0;
+      const prevIndex = pairs.get(key) || 0;
       if (i !== prevIndex + 1) {
         return true;
       }
     } else {
-      prevPair.set(key, i);
-      pairs.add(key);
+      pairs.set(key, i);
     }
   }
   return false;
