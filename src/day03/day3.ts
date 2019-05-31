@@ -1,10 +1,10 @@
 export function day3a(input: string): number {
   const houses = new Set<string>();
-  let current = [0, 0];
-  houses.add(JSON.stringify(current));
+  let santa = [0, 0];
+  houses.add(JSON.stringify(santa));
   for (const house of input) {
-    current = move(current, house);
-    houses.add(JSON.stringify(current));
+    santa = move(santa, house);
+    houses.add(JSON.stringify(santa));
   }
 
   return houses.size;
