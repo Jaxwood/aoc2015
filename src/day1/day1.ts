@@ -1,11 +1,11 @@
 export function day1(input: string): number {
-  let cnt = 0;
-  for (const s of input) {
-    if (s === '(') {
-      cnt = cnt + 1;
+  let result = 0;
+  for (const i of input) {
+    if (i === '(') {
+      result += 1;
     } else {
-      cnt = cnt - 1;
+      result -= 1;
     }
   }
-  return cnt;
+  return result;
 }

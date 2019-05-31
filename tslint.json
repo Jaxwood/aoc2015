@@ -1,15 +1,10 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint-config-airbnb"
-    ],
-    "jsRules": {},
-    "rules": {
-        "eofline": false,
-        "quotemark": [
-            true,
-            "single"
-        ]
-    },
-    "rulesDirectory": []
+  "defaultSeverity": "error",
+  "extends": ["tslint:latest", "tslint-config-prettier"],
+  "jsRules": {},
+  "rules": {
+    "eofline": false,
+    "quotemark": [true, "single"]
+  },
+  "rulesDirectory": []
 }

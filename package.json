@@ -21,6 +21,7 @@
     "ts-jest": "^24.0.2",
     "tslint": "^5.16.0",
     "tslint-config-airbnb": "^5.11.1",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.4.5"
   },
   "jest": {
@@ -34,5 +35,9 @@
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     }
+  },
+  "dependencies": {
+    "lodash": "^4.17.11",
+    "fs-readfile-promise": "^3.0.1"
   }
 }
