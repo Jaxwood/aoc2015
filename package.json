@@ -8,6 +8,7 @@
     "build": "tsc",
     "pretest": "npm run tslint",
     "test": "jest",
+    "test:watch": "jest --watch",
     "tslint": "tslint -c tslint.json -p tsconfig.json"
   },
   "author": "Jacob Lorenzen",
