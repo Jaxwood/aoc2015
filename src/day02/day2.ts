@@ -1,5 +1,10 @@
 import * as _ from 'lodash';
-export function day2a(input: string): number {
+
+export function day2a(input: string[]) {
+  return _.sum(input.map(l => sum(l)));
+}
+
+function sum(input: string): number {
   const [l, w, h] = input.split('x').map(s => parseInt(s, 10));
   const side1 = 2 * l * w;
   const side2 = 2 * w * h;
