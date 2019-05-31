@@ -1,3 +1,4 @@
+import fsReadfilePromise from 'fs-readfile-promise';
 import { Sut } from './day1';
 
 interface TestCase {
@@ -49,5 +50,12 @@ describe('day1', () => {
       const actual = sut.day1(testcase.pattern);
       expect(actual).toBe(testcase.expected);
     }
+  });
+
+  it('should calculate floors to day1 input', async () => {
+    const sut = new Sut();
+    const input = await fsReadfilePromise('./src/day1/input.txt', 'utf-8');
+    const actual = sut.day1(input);
+    expect(actual).toBe(280);
   });
 });
