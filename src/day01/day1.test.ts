@@ -19,7 +19,7 @@ describe('day1', () => {
     });
   });
 
-  it('day1a input should equal 280', async () => {
+  it('should calculate solution for day1a', async () => {
     const input = await fsReadfilePromise(
       path.resolve(__dirname, 'input.txt'),
       'utf-8'
@@ -28,7 +28,7 @@ describe('day1', () => {
     expect(actual).toBe(280);
   });
 
-  it('day1b input should equal 1797', async () => {
+  it('should calculate solution for day1b', async () => {
     const input = await fsReadfilePromise(
       path.resolve(__dirname, 'input.txt'),
       'utf-8'
