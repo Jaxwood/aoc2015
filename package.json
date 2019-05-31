@@ -4,8 +4,11 @@
   "description": "Advent of code 2015",
   "main": "index.js",
   "scripts": {
+    "prebuild": "npm run tslint",
     "build": "tsc",
-    "test": "jest"
+    "pretest": "npm run tslint",
+    "test": "jest",
+    "tslint": "tslint -c tslint.json -p tsconfig.json"
   },
   "author": "Jacob Lorenzen",
   "license": "MIT",
