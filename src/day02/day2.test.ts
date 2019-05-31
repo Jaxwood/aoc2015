@@ -32,6 +32,6 @@ describe('day2', () => {
       'UTF-8'
     );
     const lines = fileContent.split('\n');
-    expect(day2b(lines)).toBe(3800576);
+    expect(day2b(lines)).toBe(3783758);
   });
 });
