@@ -18,6 +18,6 @@ describe('day6', () => {
       'utf-8'
     );
     const actual = day6b(input.split('\n'));
-    expect(actual).toBe(377891);
+    expect(actual).toBe(14110788);
   });
 });
