@@ -14,22 +14,23 @@ describe('day7', () => {
       'NOT x -> h',
       'NOT y -> i',
     ];
-    expect(day7a(operations, 'd')).toBe(72);
-    expect(day7a(operations, 'e')).toBe(507);
-    expect(day7a(operations, 'f')).toBe(492);
-    expect(day7a(operations, 'g')).toBe(114);
-    // expect(day7a(operations, 'h')).toBe(65412);
-    // expect(day7a(operations, 'i')).toBe(65079);
-    expect(day7a(operations, 'x')).toBe(123);
-    expect(day7a(operations, 'y')).toBe(456);
+    const actual = day7a(operations);
+    expect(actual.get('d')).toBe(72);
+    expect(actual.get('e')).toBe(507);
+    expect(actual.get('f')).toBe(492);
+    expect(actual.get('g')).toBe(114);
+    expect(actual.get('h')).toBe(65412);
+    expect(actual.get('i')).toBe(65079);
+    expect(actual.get('x')).toBe(123);
+    expect(actual.get('y')).toBe(456);
   });
 
-  it('should get the solution to day7a', async () => {
+  xit('should get the solution to day7a', async () => {
     const input = await fsReadfilePromise(
       path.resolve(__dirname, 'input.txt'),
       'utf-8'
     );
-    const actual = day7a(input.split('\n'), 'a');
-    expect(actual).toBe(377891);
+    const actual = day7a(input.split('\n'));
+    expect(actual.get('a')).toBe(377891);
   });
 });

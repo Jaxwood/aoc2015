@@ -1,48 +1,89 @@
-// tslint:disable: no-bitwise
-export function day7a(instructions: string[], index: string): number {
-  const register = new Map<string, number>();
-  for (const instruction of instructions) {
-    const setRegister = instruction.match(/(\d+) -> (\w+)/);
-    if (setRegister) {
-      const [expression, value, location] = setRegister;
-      register.set(location, toInt(value));
-    }
-    const bitwiseAnd = instruction.match(/(\w+) AND (\w+) -> (\w+)/);
-    if (bitwiseAnd) {
-      const [expression, register1, register2, location] = bitwiseAnd;
-      const register1Value = register.get(register1) || 0;
-      const register2Value = register.get(register2) || 0;
-      register.set(location, register1Value & register2Value);
-    }
-    const bitwiseOr = instruction.match(/(\w+) OR (\w+) -> (\w+)/);
-    if (bitwiseOr) {
-      const [expression, register1, register2, location] = bitwiseOr;
-      const register1Value = register.get(register1) || 0;
-      const register2Value = register.get(register2) || 0;
-      register.set(location, register1Value | register2Value);
-    }
-    const leftshift = instruction.match(/(\w+) LSHIFT (\d+) -> (\w+)/);
-    if (leftshift) {
-      const [expression, register1, count, location] = leftshift;
-      const register1Value = register.get(register1) || 0;
-      register.set(location, register1Value << toInt(count));
-    }
-    const rightshift = instruction.match(/(\w+) RSHIFT (\d+) -> (\w+)/);
-    if (rightshift) {
-      const [expression, register1, count, location] = rightshift;
-      const register1Value = register.get(register1) || 0;
-      register.set(location, register1Value >> toInt(count));
-    }
-    const not = instruction.match(/NOT (\w+) -> (\w+)/);
-    if (not) {
-      const [expression, register1, location] = not;
-      const register1Value = register.get(register1) || 0;
-      register.set(location, ~register1Value);
-    }
-  }
-  return register.get(index) || 0;
+// tslint:disable no-bitwise
+import _ from 'lodash';
+import { And } from './And';
+import { Lshift } from './Lshift';
+import { Not } from './Not';
+import { Or } from './Or';
+import Result from './Result';
+import { Rshift } from './Rshift';
+import { Set } from './Set';
+
+const setOperation = new RegExp(/^(\d+) -> (\w+)$/);
+const andOperation = new RegExp(/^(\w+|\d+) AND (\w+|\d+) -> (\w+)$/);
+const orOperation = new RegExp(/^(\w+|\d+) OR (\w+|\d+) -> (\w+)$/);
+const leftshiftOperation = new RegExp(/^(\w+|\d+) LSHIFT (\d+) -> (\w+)$/);
+const rightshiftOperation = new RegExp(/^(\w+|\d+) RSHIFT (\d+) -> (\w+)$/);
+const notOperation = new RegExp(/^NOT (\w+|\d+) -> (\w+)$/);
+
+export interface IOperation {
+  execute(register: Map<string, number>): Result;
 }
 
-function toInt(num: string) {
-  return parseInt(num, 10);
+export function day7a(instructions: string[]): Map<string, number> {
+  const register = new Map<string, number>();
+  const operations = parseOperations(instructions);
+  global.console.log(operations);
+  while (operations.length > 0) {
+    const operation = operations.shift();
+    if (!operation) {
+      continue;
+    }
+    const result = operation.execute(register);
+    global.console.log(result);
+    if (result.success) {
+      register.set(result.key, result.value);
+    } else {
+      operations.push(operation);
+    }
+  }
+  return register;
+}
+
+function parseOperations(instructions: string[]): IOperation[] {
+  const operations: IOperation[] = [];
+  for (const instruction of instructions) {
+    if (setOperation.test(instruction)) {
+      const setRegister = instruction.match(setOperation);
+      if (setRegister) {
+        const [expression, value, location] = setRegister;
+        operations.push(new Set(value, location));
+      }
+    }
+    if (andOperation.test(instruction)) {
+      const bitwiseAnd = instruction.match(andOperation);
+      if (bitwiseAnd) {
+        const [expression, register1, register2, location] = bitwiseAnd;
+        operations.push(new And(register1, register2, location));
+      }
+    }
+    if (orOperation.test(instruction)) {
+      const bitwiseOr = instruction.match(orOperation);
+      if (bitwiseOr) {
+        const [expression, register1, register2, location] = bitwiseOr;
+        operations.push(new Or(register1, register2, location));
+      }
+    }
+    if (leftshiftOperation.test(instruction)) {
+      const ls = instruction.match(leftshiftOperation);
+      if (ls) {
+        const [expression, register1, count, location] = ls;
+        operations.push(new Lshift(register1, count, location));
+      }
+    }
+    if (rightshiftOperation.test(instruction)) {
+      const rs = instruction.match(rightshiftOperation);
+      if (rs) {
+        const [expression, register1, count, location] = rs;
+        operations.push(new Rshift(register1, count, location));
+      }
+    }
+    if (notOperation.test(instruction)) {
+      const not = instruction.match(notOperation);
+      if (not) {
+        const [expression, register1, location] = not;
+        operations.push(new Not(register1, location));
+      }
+    }
+  }
+  return operations;
 }
