@@ -3,7 +3,7 @@ import path from 'path';
 import { day7a } from './day7';
 
 describe('day7', () => {
-  it('should calculate bitwise operations', () => {
+  xit('should calculate bitwise operations', () => {
     const operations = [
       '123 -> x',
       '456 -> y',
@@ -25,12 +25,12 @@ describe('day7', () => {
     expect(actual.get('y')).toBe(456);
   });
 
-  xit('should get the solution to day7a', async () => {
+  it('should get the solution to day7a', async () => {
     const input = await fsReadfilePromise(
       path.resolve(__dirname, 'input.txt'),
       'utf-8'
     );
-    const actual = day7a(input.split('\n'));
+    const actual = day7a(input.split('\r\n'));
     expect(actual.get('a')).toBe(377891);
   });
 });

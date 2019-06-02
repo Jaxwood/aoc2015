@@ -11,7 +11,7 @@ export class And implements IOperation {
   ) {}
 
   public execute(register: Map<string, number>): Result {
-    const l = _.isNumber(this.left)
+    const l = this.toInt(this.left)
       ? this.toInt(this.left)
       : register.has(this.left);
     const r = register.has(this.left);

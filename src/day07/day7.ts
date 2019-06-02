@@ -8,7 +8,7 @@ import Result from './Result';
 import { Rshift } from './Rshift';
 import { Set } from './Set';
 
-const setOperation = new RegExp(/^(\d+) -> (\w+)$/);
+const setOperation = new RegExp(/^(\w+|\d+) -> (\w+)$/);
 const andOperation = new RegExp(/^(\w+|\d+) AND (\w+|\d+) -> (\w+)$/);
 const orOperation = new RegExp(/^(\w+|\d+) OR (\w+|\d+) -> (\w+)$/);
 const leftshiftOperation = new RegExp(/^(\w+|\d+) LSHIFT (\d+) -> (\w+)$/);
@@ -22,14 +22,12 @@ export interface IOperation {
 export function day7a(instructions: string[]): Map<string, number> {
   const register = new Map<string, number>();
   const operations = parseOperations(instructions);
-  global.console.log(operations);
   while (operations.length > 0) {
     const operation = operations.shift();
     if (!operation) {
       continue;
     }
     const result = operation.execute(register);
-    global.console.log(result);
     if (result.success) {
       register.set(result.key, result.value);
     } else {
