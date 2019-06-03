@@ -3,7 +3,7 @@ import path from 'path';
 import { day7a } from './day7';
 
 describe('day7', () => {
-  xit('should calculate bitwise operations', () => {
+  it('should calculate bitwise operations', () => {
     const operations = [
       '123 -> x',
       '456 -> y',
@@ -31,6 +31,6 @@ describe('day7', () => {
       'utf-8'
     );
     const actual = day7a(input.split('\r\n'));
-    expect(actual.get('a')).toBe(377891);
+    expect(actual.get('a')).toBe(3176);
   });
 });

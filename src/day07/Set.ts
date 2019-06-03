@@ -6,10 +6,15 @@ export class Set implements IOperation {
   constructor(private left: string, private target: string) {}
 
   public execute(register: Map<string, number>): Result {
-    if (parseInt(this.left, 10)) {
+    const reg = register.has(this.left);
+    if (!isNaN(parseInt(this.left, 10))) {
       return new Result(this.target, parseInt(this.left, 10), true);
-    } else if (register.has(this.left)) {
-      return new Result(this.target, register.get(this.left) || 0, true);
+    } else if (reg) {
+      const ll = register.get(this.left);
+      if (ll === undefined) {
+        throw new Error('set');
+      }
+      return new Result(this.target, ll, true);
     } else {
       return new Result('', 0, false);
     }

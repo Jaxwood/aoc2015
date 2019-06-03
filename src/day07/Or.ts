@@ -14,30 +14,17 @@ export class Or implements IOperation {
     const l = register.has(this.left);
     const r = register.has(this.right);
     if (l && r) {
-      return new Result(
-        this.target,
-        this.or(register.get(this.left) || 0, register.get(this.right) || 0),
-        true
-      );
+      const rl = register.get(this.left);
+      const rr = register.get(this.right);
+      if (rl === undefined) {
+        throw Error('or');
+      }
+      if (rr === undefined) {
+        throw Error('or');
+      }
+      return new Result(this.target, (0xffff & rl) | (0xffff & rr), true);
     } else {
       return new Result('', 0, false);
     }
-  }
-
-  private toBinary(target: number): string {
-    return _.padStart(target.toString(2), 16, '0');
-  }
-
-  private or(left: number, right: number): number {
-    return parseInt(
-      _.zip([...this.toBinary(left)], [...this.toBinary(right)])
-        .map(([l, r]) => (this.toInt(l || '') | this.toInt(r || '')).toString())
-        .join(''),
-      2
-    );
-  }
-
-  private toInt(num: string) {
-    return parseInt(num, 10);
   }
 }

@@ -14,31 +14,23 @@ export class And implements IOperation {
     const l = this.toInt(this.left)
       ? this.toInt(this.left)
       : register.has(this.left);
-    const r = register.has(this.left);
+    const r = register.has(this.right);
     if (l && r) {
-      return new Result(
-        this.target,
-        this.and(register.get(this.left) || 0, register.get(this.right) || 0),
-        true
-      );
+      const ll = this.toInt(this.left)
+        ? this.toInt(this.left)
+        : register.get(this.left);
+      const rr = register.get(this.right);
+      if (ll === undefined) {
+        throw new Error('and');
+      }
+      if (rr === undefined) {
+        throw new Error('and');
+      }
+      return new Result(this.target, 0xffff & ll & (0xffff & rr), true);
     } else {
       return new Result('', 0, false);
     }
   }
-
-  private toBinary(target: number): string {
-    return _.padStart(target.toString(2), 16, '0');
-  }
-
-  private and(left: number, right: number): number {
-    return parseInt(
-      _.zip([...this.toBinary(left)], [...this.toBinary(right)])
-        .map(([l, r]) => (this.toInt(l || '') & this.toInt(r || '')).toString())
-        .join(''),
-      2
-    );
-  }
-
   private toInt(num: string) {
     return parseInt(num, 10);
   }
