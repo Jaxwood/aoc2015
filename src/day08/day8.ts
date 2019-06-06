@@ -6,11 +6,10 @@ export function day8a(input: string[]): number {
   return sum;
 }
 
-function characterCodes(input: string) {
-  let cnt = 2;
-  for (const c of input) {
-    cnt++;
+export function day8b(input: string[]): number {
+  let sum = 0;
+  for (const str of input) {
+    sum += (JSON.stringify(str)).length - str.length;
   }
-  return cnt;
+  return sum;
 }
-
