@@ -1,6 +1,7 @@
 export function day8a(input: string[]): number {
   let sum = 0;
   for (const str of input) {
+  // tslint:disable-next-line: no-eval
     sum += str.length - (eval(str)).length;
   }
   return sum;
