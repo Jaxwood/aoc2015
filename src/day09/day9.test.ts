@@ -11,4 +11,13 @@ describe('day9', () => {
     const actual = day9a(input.split('\r\n'));
     expect(actual).toBe(605);
   });
+
+  xit('should find shortest distance for input', async () => {
+    const input = await fsReadfilePromise(
+      path.resolve(__dirname, 'input.txt'),
+      'utf-8'
+    );
+    const actual = day9a(input.split('\r\n'));
+    expect(actual).toBe(117);
+  });
 });

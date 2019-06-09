@@ -1,22 +1,25 @@
 const regex = new RegExp(/(\w+) to (\w+) = (\d+)/);
 
-interface ITravel {
-  cost: number,
-  from: string,
-  to: string,
-}
+type Destination = [string, number];
 
 export function day9a(input: string[]) {
-  const nodes: ITravel[] = [];
+  const nodes = new Map<string, Set<Destination>>();
   for (const line of input) {
-    if (regex.test(line)) {
-      const match = line.match(regex);
-      if (match) {
+    const match = line.match(regex);
+    if (match) {
       const [exp, from, to, cost] = match;
-        nodes.push({from, to, cost: parseInt(cost, 10) });
-      }
+
+      const destinations = nodes.get(from) || new Set<Destination>();
+      destinations.add([to, parseInt(cost, 10)]);
+      nodes.set(from, destinations);
+
+      const reverse = nodes.get(to) || new Set<Destination>();
+      reverse.add([from, parseInt(cost, 10)]);
+      nodes.set(to, reverse);
     }
   }
 
-  return 0;
+  global.console.log(nodes);
+
+  return 0; // shorestDistances;
 }
