@@ -12,7 +12,7 @@ describe('day9', () => {
     expect(actual).toBe(605);
   });
 
-  xit('should find shortest distance for input', async () => {
+  it('should find shortest distance for input', async () => {
     const input = await fsReadfilePromise(
       path.resolve(__dirname, 'input.txt'),
       'utf-8'
