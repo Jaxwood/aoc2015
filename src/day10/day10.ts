@@ -21,14 +21,18 @@ function lookandsay(input: string): string {
     }
     // if char doesn't match previous - update result and set new char and char count
     if (charToCount !== c) {
-      result += charCount;
-      result += charToCount;
+      result = update(result, charCount, charToCount);
       charToCount = c;
       charCount = 1;
     }
   }
   // add result for the last iteration
+  return update(result, charCount, charToCount || '');
+}
+
+function update(result: string, charCount: number, charToCount: string): string {
   result += charCount;
   result += charToCount;
   return result;
 }
+
