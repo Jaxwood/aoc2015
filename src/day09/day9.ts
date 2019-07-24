@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 const regex = new RegExp(/(\w+) to (\w+) = (\d+)/);
 
 type Destination = [string, number];
