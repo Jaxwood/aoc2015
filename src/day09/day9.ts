@@ -8,8 +8,22 @@ export function day9a(input: string[]): number {
 
   let lowestCost = Infinity;
   for(const from of graph.keys()) {
-    const cost = calculateCost(from, graph, (a,b) => a < b);
+    const cost = calculateShortestDistance(from, graph);
     if (cost < lowestCost) {
+      lowestCost = cost;
+    }
+  }
+
+  return lowestCost;
+}
+
+export function day9b(input: string[]): number {
+  const graph = parseInput(input);
+
+  let lowestCost = -Infinity;
+  for(const from of graph.keys()) {
+    const cost = calculateLongestDistance(from, graph);
+    if (cost > lowestCost) {
       lowestCost = cost;
     }
   }
@@ -34,7 +48,38 @@ function parseInput(input: string[]) {
   return graph;
 }
 
-function calculateCost(from: string, graph: Map<string, Set<Destination>>, predicate: (a: number, b: number) => boolean): number {
+function calculateLongestDistance(from: string, graph: Map<string, Set<Destination>>): number {
+  const visited = [];
+  const queue = [from];
+  let sum = 0;
+  while (queue.length > 0) {
+    const city = queue.pop();
+    if (city) {
+      visited.push(city);
+      const neighbors = graph.get(city);
+      if (neighbors) {
+        let min = -Infinity;
+        let next: string = '';
+        for (const [destination, cost] of neighbors) {
+          if (visited.indexOf(destination) === -1) {
+            if (cost > min) {
+              min = cost;
+              next = destination;
+            }
+          }
+        }
+        if (min !== -Infinity){
+          sum += min;
+          queue.push(next);
+        }
+      }
+    }
+  }
+
+  return sum;
+}
+
+function calculateShortestDistance(from: string, graph: Map<string, Set<Destination>>): number {
   const visited = [];
   const queue = [from];
   let sum = 0;
@@ -48,7 +93,7 @@ function calculateCost(from: string, graph: Map<string, Set<Destination>>, predi
         let next: string = '';
         for (const [destination, cost] of neighbors) {
           if (visited.indexOf(destination) === -1) {
-            if (predicate(cost, min)) {
+            if (cost < min) {
               min = cost;
               next = destination;
             }
