@@ -8,7 +8,7 @@ export function day9a(input: string[]): number {
 
   let lowestCost = Infinity;
   for(const from of graph.keys()) {
-    const cost = calculateShortestDistance(from, graph);
+    const cost = calculateDistance(from, graph, Infinity, (a,b) => a < b);
     if (cost < lowestCost) {
       lowestCost = cost;
     }
@@ -22,7 +22,7 @@ export function day9b(input: string[]): number {
 
   let lowestCost = -Infinity;
   for(const from of graph.keys()) {
-    const cost = calculateLongestDistance(from, graph);
+    const cost = calculateDistance(from, graph, -Infinity, (a,b) => a > b);
     if (cost > lowestCost) {
       lowestCost = cost;
     }
@@ -48,7 +48,7 @@ function parseInput(input: string[]) {
   return graph;
 }
 
-function calculateLongestDistance(from: string, graph: Map<string, Set<Destination>>): number {
+function calculateDistance(from: string, graph: Map<string, Set<Destination>>, defaultValue: number, predicate: (a: number,b: number) => boolean): number {
   const visited = [];
   const queue = [from];
   let sum = 0;
@@ -58,48 +58,17 @@ function calculateLongestDistance(from: string, graph: Map<string, Set<Destinati
       visited.push(city);
       const neighbors = graph.get(city);
       if (neighbors) {
-        let min = -Infinity;
+        let min = defaultValue;
         let next: string = '';
         for (const [destination, cost] of neighbors) {
           if (visited.indexOf(destination) === -1) {
-            if (cost > min) {
+            if (predicate(cost, min)) {
               min = cost;
               next = destination;
             }
           }
         }
-        if (min !== -Infinity){
-          sum += min;
-          queue.push(next);
-        }
-      }
-    }
-  }
-
-  return sum;
-}
-
-function calculateShortestDistance(from: string, graph: Map<string, Set<Destination>>): number {
-  const visited = [];
-  const queue = [from];
-  let sum = 0;
-  while (queue.length > 0) {
-    const city = queue.pop();
-    if (city) {
-      visited.push(city);
-      const neighbors = graph.get(city);
-      if (neighbors) {
-        let min = Infinity;
-        let next: string = '';
-        for (const [destination, cost] of neighbors) {
-          if (visited.indexOf(destination) === -1) {
-            if (cost < min) {
-              min = cost;
-              next = destination;
-            }
-          }
-        }
-        if (min !== Infinity){
+        if (min !== defaultValue){
           sum += min;
           queue.push(next);
         }
