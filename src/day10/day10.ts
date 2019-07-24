@@ -31,8 +31,5 @@ function lookandsay(input: string): string {
 }
 
 function update(result: string, charCount: number, charToCount: string): string {
-  result += charCount;
-  result += charToCount;
-  return result;
+  return `${result}${charCount}${charToCount}`;
 }
-
