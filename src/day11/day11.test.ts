@@ -1,4 +1,4 @@
-import { checkPasswordRequirements, day11 } from './day11';
+import { checkPasswordRequirements, day11, generateNewPassword } from './day11';
 
 describe.each([['abcdefgh', 'abcdffaa'], ['ghijklmn', 'ghjaabcc']])('day11', (password, expected) => {
   xit(`should generate password ${expected} from ${password}`, () => {
@@ -7,7 +7,13 @@ describe.each([['abcdefgh', 'abcdffaa'], ['ghijklmn', 'ghjaabcc']])('day11', (pa
   });
 });
 
-describe('utility', () => {
+describe.each([['xx', 'xy'], ['xy','xz'], ['xz', 'ya'], ['ya', 'yb'], ['xzz', 'yaa']])('generate next password', (input: string, expected: string) => {
+  test(`should increment password ${input} to ${expected}`, () => {
+    expect(generateNewPassword(input)).toBe(expected);
+  });
+});
+
+describe('check password requirements', () => {
   it('should return false if i is found', () => {
     expect(checkPasswordRequirements('i')).toBeFalsy();
   });
