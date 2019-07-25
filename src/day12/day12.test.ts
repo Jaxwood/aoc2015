@@ -1,3 +1,5 @@
+import fsReadfilePromise from 'fs-readfile-promise';
+import path from 'path';
 import { day12a } from './day12';
 
 describe('day12', () => {
@@ -33,5 +35,14 @@ describe('day12', () => {
 
   it('should calculate sum for {}', async () => {
     expect(day12a({})).toBe(0);
+  });
+
+  it('should calculate sum for day12', async () => {
+    const input = await fsReadfilePromise(
+      path.resolve(__dirname, 'input.json'),
+      'utf-8'
+    );
+    const actual = day12a(JSON.parse(input));
+    expect(actual).toBe(191164);
   });
 });

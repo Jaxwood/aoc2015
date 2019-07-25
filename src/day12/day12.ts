@@ -1,18 +1,18 @@
 import * as _ from 'lodash';
 
 export function day12a(input: any): number {
+  const queue = [input];
   let sum = 0;
-  if (input instanceof Array) {
-    for (const i of input) {
-      if (_.isNumber(i)) {
-        sum += i;
-      }
-      else {
-        sum += day12a(i);
-      }
+  while(queue.length > 0) {
+    const next = queue.shift();
+    if (_.isNumber(next)) {
+      sum += next;
     }
-  } else {
-    sum += day12a(Object.values(input));
+    else if (next instanceof Array) {
+      queue.push(...next);
+    } else if (_.isObject(next)) {
+      queue.push(...Object.values(next));
+    }
   }
   return sum;
 }
