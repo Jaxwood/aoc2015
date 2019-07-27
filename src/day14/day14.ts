@@ -10,7 +10,6 @@ export function day14(input: string[], ticks: number): number {
     }
   }
 
-  global.console.log(contestants);
   const best = _.maxBy(contestants, c => c.getDistanceTraveled());
   return best ? best.getDistanceTraveled() : 0;
 }
@@ -35,20 +34,41 @@ class Reindeer {
   private rest: number;
   private clock = 0;
   private distance = 0;
+  private iterator: IterableIterator<number>;
+  private treshold: number;
+  private isResting: boolean = false;
 
   constructor(name: string, speed: number, time: number, rest: number) {
     this.name = name;
     this.speed = speed;
     this.time = time;
     this.rest = rest;
+    this.iterator = this.state();
+    this.treshold = this.iterator.next().value;
   }
 
   public tick(): void {
     ++this.clock;
-    this.distance += this.speed;
+    while(this.clock > this.treshold)
+    {
+      this.treshold = this.iterator.next().value;
+      this.isResting = !this.isResting;
+    }
+    this.distance += this.isResting ? 0 : this.speed;
   }
 
   public getDistanceTraveled(): number {
     return this.distance;
+  }
+
+  public *state(): IterableIterator<number> {
+    let initial = this.time;
+    yield initial;
+    while (true) {
+      initial += this.rest;
+      yield initial;
+      initial += this.time;
+      yield initial;
+    }
   }
 }
