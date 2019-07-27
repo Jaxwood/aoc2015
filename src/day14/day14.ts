@@ -1,7 +1,7 @@
 const reg = new RegExp(/(\w+) can fly (\d+) km\/s for (\d+) seconds, but then must rest for (\d+) seconds/);
 import * as _ from 'lodash';
 
-export function day14(input: string[], ticks: number): number {
+export function day14a(input: string[], ticks: number): number {
   const contestants = parseInput(input);
 
   for (let i = 0; i < ticks; i++) {
@@ -12,6 +12,28 @@ export function day14(input: string[], ticks: number): number {
 
   const best = _.maxBy(contestants, c => c.getDistanceTraveled());
   return best ? best.getDistanceTraveled() : 0;
+}
+
+export function day14b(input: string[], ticks: number): number {
+  const contestants = parseInput(input);
+
+  for (let i = 0; i < ticks; i++) {
+    for (const contestant of contestants) {
+      contestant.tick();
+    }
+    const maxDistance = _.maxBy(contestants, c => c.getDistanceTraveled());
+    if (maxDistance) {
+      const inLead = contestants.filter(
+        c => c.getDistanceTraveled() === maxDistance.getDistanceTraveled()
+      );
+      for (const lead of inLead) {
+        lead.addPoint();
+      }
+    }
+  }
+
+  const best = _.maxBy(contestants, c => c.getPoints());
+  return best ? best.getPoints() : 0;
 }
 
 function parseInput(input: string[]): Reindeer[] {
@@ -37,6 +59,7 @@ class Reindeer {
   private iterator: IterableIterator<number>;
   private treshold: number;
   private isResting: boolean = false;
+  private points = 0;
 
   constructor(name: string, speed: number, time: number, rest: number) {
     this.name = name;
@@ -59,6 +82,14 @@ class Reindeer {
 
   public getDistanceTraveled(): number {
     return this.distance;
+  }
+
+  public addPoint(): void {
+    this.points++;
+  }
+
+  public getPoints(): number {
+    return this.points;
   }
 
   public *state(): IterableIterator<number> {
