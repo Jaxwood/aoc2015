@@ -3,8 +3,24 @@ const reg = new RegExp(/(\w+) would (gain|lose) (\d+) happiness units by sitting
 
 type Person = [string, number];
 
-export function day13(input: string[]) {
+export function day13a(input: string[]) {
   const seatingPreferences = parseInput(input);
+  const seatingOptions = permute([...seatingPreferences.keys()]);
+  const costs = seatingOptions.map(c => calculate(c, seatingPreferences));
+  return _.max(costs);
+}
+
+export function day13b(input: string[]) {
+  const myself = 'neutral';
+  const seatingPreferences = parseInput(input);
+  // add neutral element
+  for (const key of seatingPreferences.keys()) {
+    const person = seatingPreferences.get(key) || [];
+    person.push([myself, 0]);
+    seatingPreferences.set(key, person);
+  }
+  seatingPreferences.set(myself, [...seatingPreferences.keys()].map(c => [c,0]));
+
   const seatingOptions = permute([...seatingPreferences.keys()]);
   const costs = seatingOptions.map(c => calculate(c, seatingPreferences));
   return _.max(costs);
