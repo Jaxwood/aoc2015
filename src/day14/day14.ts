@@ -27,13 +27,13 @@ export function day14b(input: string[], ticks: number): number {
         c => c.getDistanceTraveled() === maxDistance.getDistanceTraveled()
       );
       for (const lead of inLead) {
-        lead.addPoint();
+        lead.point++;
       }
     }
   }
 
-  const best = _.maxBy(contestants, c => c.getPoints());
-  return best ? best.getPoints() : 0;
+  const best = _.maxBy(contestants, c => c.point);
+  return best ? best.point : 0;
 }
 
 function parseInput(input: string[]): Reindeer[] {
@@ -84,11 +84,11 @@ class Reindeer {
     return this.distance;
   }
 
-  public addPoint(): void {
-    this.points++;
+  public set point(value: number) {
+    this.points = value;
   }
 
-  public getPoints(): number {
+  public get point(): number {
     return this.points;
   }
 
