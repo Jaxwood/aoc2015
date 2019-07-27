@@ -11,4 +11,13 @@ describe('day14', () => {
     const actual = day14(input.split('\r\n'), 1000);
     expect(actual).toBe(1120);
   });
+
+  it('should find the reindeer that travelled the furthers with puzzle input', async () => {
+    const input = await fsReadfilePromise(
+      path.resolve(__dirname, 'input.txt'),
+      'utf-8'
+    );
+    const actual = day14(input.split('\r\n'), 2503);
+    expect(actual).toBe(2655);
+  });
 });
