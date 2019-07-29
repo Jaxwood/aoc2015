@@ -50,8 +50,8 @@ class Aunt {
     this.properties = properties;
   }
 
-  public matches(characteristics: Property[]): boolean {
-    for (const [charac, characVal] of characteristics) {
+  public matches(chars: Property[]): boolean {
+    for (const [charac, characVal] of chars) {
       const prop = this.properties.filter(([c, _]) => c === charac);
       if (prop.length === 1) {
         const [_,val] = prop[0];
