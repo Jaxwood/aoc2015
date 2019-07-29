@@ -4,13 +4,13 @@ import { day16a } from './day16';
 
 describe('day16', () => {
   describe('a', () => {
-    it('should', async () => {
+    it('should find the correct aunt', async () => {
       const input = await fsReadfilePromise(
         path.resolve(__dirname, 'input.txt'),
         'utf-8'
       );
       const actual = day16a(input.split('\r\n'));
-      expect(actual).toBe(0);
+      expect(actual).toBe(40);
     });
   });
 });
