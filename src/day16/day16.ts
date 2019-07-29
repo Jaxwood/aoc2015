@@ -1,20 +1,5 @@
 const reg = new RegExp(/\w (\d+): (\w+): (\d+), (\w+): (\d+), (\w+): (\d+)/);
-
-type Property = [string, number];
-
-export function day16a(input: string[]): number {
-  const aunts = parse(input);
-  const characteristics = auntCharacteristics();
-  const candidate = aunts.filter(c => c.matches(characteristics));
-
-  if (candidate.length === 1) {
-    return candidate[0].name;
-  }
-  return 0;
-}
-
-function auntCharacteristics(): Property[] {
-  return [
+const characteristics: Property[] = [
     ['children', 3],
     ['cats', 7],
     ['samoyeds', 2],
@@ -26,6 +11,17 @@ function auntCharacteristics(): Property[] {
     ['cars', 2],
     ['perfumes', 1],
   ];
+
+type Property = [string, number];
+
+export function day16a(input: string[]): number {
+  const aunts = parse(input);
+  const candidate = aunts.filter(c => c.matches(characteristics));
+
+  if (candidate.length === 1) {
+    return candidate[0].name;
+  }
+  return 0;
 }
 
 function parse(input: string[]): Aunt[] {
