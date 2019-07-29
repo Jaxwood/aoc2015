@@ -24,6 +24,16 @@ export function day16a(input: string[]): number {
   return 0;
 }
 
+export function day16b(input: string[]): number {
+  const aunts = parse(input);
+  const candidate = aunts.filter(c => c.same(characteristics));
+
+  if (candidate.length === 1) {
+    return candidate[0].name;
+  }
+  return 0;
+}
+
 function parse(input: string[]): Aunt[] {
   const aunts = [];
   for (const line of input) {
@@ -56,6 +66,29 @@ class Aunt {
       if (prop.length === 1) {
         const [_,val] = prop[0];
         if (characVal !== val) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  public same(chars: Property[]): boolean {
+    for (const [charac, characVal] of chars) {
+      const prop = this.properties.filter(([c, _]) => c === charac);
+      if (prop.length === 1) {
+        const [propname,propval] = prop[0];
+        if (propname === 'cats' ||propname === 'trees') {
+          if (characVal >= propval) {
+            return false;
+          }
+        }
+        if (propname === 'pomeranians' || propname === 'goldfish') {
+          if (characVal <= propval) {
+            return false;
+          }
+        }
+        else if (characVal !== propval) {
           return false;
         }
       }
