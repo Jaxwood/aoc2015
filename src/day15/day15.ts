@@ -19,7 +19,34 @@ export function day15a(input: string[]): number {
   return max;
 }
 
-export function mix(ingridients: Ingridient[], teaspoons: number[]): number {
+export function day15b(input: string[]): number {
+  let max = 0;
+  const ingridients = parseInput(input);
+  const combinations = combine(100, input.length);
+  for (const combi of combinations) {
+    const combis = permute(combi);
+    for (const c of combis) {
+      if (hasCalorieCounfOf(ingridients, c, 500)) {
+        const res = mix(ingridients, c);
+        if (res > max) {
+          max = res;
+        }
+      }
+    }
+  }
+  return max;
+}
+
+function hasCalorieCounfOf(ingridients: Ingridient[], reciepe: number[], target: number): boolean {
+  let calories = 0;
+  for (let i = 0; i < ingridients.length; i++) {
+    calories += ingridients[i].calories * reciepe[i];
+  }
+
+  return calories === target;
+}
+
+function mix(ingridients: Ingridient[], teaspoons: number[]): number {
   let capacity = 0;
   let durability = 0;
   let flavor = 0;
