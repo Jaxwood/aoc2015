@@ -3,16 +3,18 @@ const reg = new RegExp(/\w (\d+): (\w+): (\d+), (\w+): (\d+), (\w+): (\d+)/);
 type Property = [string, number];
 
 export function day16a(input: string[]): number {
-  const aunts = [];
-  for (const line of input) {
-    const match = line.match(reg);
-    if (match) {
-      const [_, aunt, fst, fstnum, snd, sndnum, third, thirdnum] = match;
-      aunts.push(Aunt.create(parseInt(aunt, 10), [[fst, parseInt(fstnum, 10)], [snd, parseInt(sndnum, 10)], [third, parseInt(thirdnum, 10)]]));
-    }
-  }
+  const aunts = parse(input);
+  const characteristics = auntCharacteristics();
+  const candidate = aunts.filter(c => c.matches(characteristics));
 
-  const characteristics: Property[] = [
+  if (candidate.length === 1) {
+    return candidate[0].name;
+  }
+  return 0;
+}
+
+function auntCharacteristics(): Property[] {
+  return [
     ['children', 3],
     ['cats', 7],
     ['samoyeds', 2],
@@ -24,12 +26,18 @@ export function day16a(input: string[]): number {
     ['cars', 2],
     ['perfumes', 1],
   ];
+}
 
-  const candidate = aunts.filter(c => c.matches(characteristics));
-  if (candidate.length === 1) {
-    return candidate[0].name;
+function parse(input: string[]): Aunt[] {
+  const aunts = [];
+  for (const line of input) {
+    const match = line.match(reg);
+    if (match) {
+      const [_, aunt, fst, fstnum, snd, sndnum, third, thirdnum] = match;
+      aunts.push(Aunt.create(parseInt(aunt, 10), [[fst, parseInt(fstnum, 10)], [snd, parseInt(sndnum, 10)], [third, parseInt(thirdnum, 10)]]));
+    }
   }
-  return 0;
+  return aunts;
 }
 
 class Aunt {
