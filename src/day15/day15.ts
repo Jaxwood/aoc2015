@@ -20,15 +20,17 @@ export function day15a(input: string[]): number {
 }
 
 export function mix(ingridients: Ingridient[], teaspoons: number[]): number {
-  const mixed = _.zip(ingridients, teaspoons);
-  const result = new Map<string, number[]>()
-  for (const [ingridient, teaspoon] of mixed) {
-    if (ingridient && teaspoon) {
-      const prop = result.get('capacity') || [];
-      result.set('capacity', prop); 
-    }
+  let capacity = 0;
+  let durability = 0;
+  let flavor = 0;
+  let texture = 0;
+  for (let i = 0; i < ingridients.length; i++) {
+    capacity += ingridients[i].capacity * teaspoons[i];
+    durability += ingridients[i].durability * teaspoons[i];
+    flavor += ingridients[i].flavor * teaspoons[i];
+    texture += ingridients[i].texture * teaspoons[i];
   }
-  return 0;
+  return lessThanZeroGuard(capacity) * lessThanZeroGuard(durability) * lessThanZeroGuard(flavor) * lessThanZeroGuard(texture);
 }
 
 // taken from https://stackoverflow.com/a/37580979/99928
