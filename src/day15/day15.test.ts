@@ -31,5 +31,14 @@ describe('day15', () => {
       const actual = day15b(input.split('\r\n'));
       expect(actual).toBe(57600000);
     });
+
+    it('should find best reciepe with calorie count of 500 with puzzle input', async () => {
+      const input = await fsReadfilePromise(
+        path.resolve(__dirname, 'input.txt'),
+        'utf-8'
+      );
+      const actual = day15b(input.split('\r\n'));
+      expect(actual).toBe(11171160);
+    });
   });
 });
