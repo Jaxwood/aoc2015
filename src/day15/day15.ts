@@ -1,12 +1,22 @@
 import * as _ from 'lodash';
-import { stringLiteral } from '@babel/types';
 const reg = new RegExp(
   /(\w+): \w+ (-?\d+), \w+ (-?\d+), \w+ (-?\d+), \w+ (-?\d+), \w+ (-?\d+)/
 );
 
 export function day15a(input: string[]): number {
+  let max = 0;
   const ingridients = parseInput(input);
-  return 0;
+  const combinations = combine(100, input.length);
+  for (const combi of combinations) {
+    const combis = permute(combi);
+    for (const c of combis) {
+      const res = mix(ingridients, c);
+      if (res > max) {
+        max = res;
+      }
+    }
+  }
+  return max;
 }
 
 export function mix(ingridients: Ingridient[], teaspoons: number[]): number {
@@ -19,6 +29,48 @@ export function mix(ingridients: Ingridient[], teaspoons: number[]): number {
     }
   }
   return 0;
+}
+
+// taken from https://stackoverflow.com/a/37580979/99928
+function permute(permutation: number[]): number[][] {
+  const length = permutation.length;
+  const result = [permutation.slice()];
+  const c = new Array(length).fill(0);
+  let idx = 1;
+
+  while (idx < length) {
+    if (c[idx] < idx) {
+      const k = idx % 2 && c[idx];
+      const p = permutation[idx];
+      permutation[idx] = permutation[k];
+      permutation[k] = p;
+      ++c[idx];
+      idx = 1;
+      result.push(permutation.slice());
+    } else {
+      c[idx] = 0;
+      ++idx;
+    }
+  }
+  return result;
+}
+
+function combine(target: number, values: number): number[][] {
+  let result: number[][] = [];
+  if (values === 2) {
+    for (let i = 0; i <= target; i++) {
+      result.push([i, target - i]);
+    }
+  } else {
+    for (let i = 0; i <= target; i++) {
+      const res = combine(target - i, values - 1);
+      for (const r of res) {
+        r.push(i);
+      }
+      result = result.concat(res);
+    }
+  }
+  return result;
 }
 
 function lessThanZeroGuard(target: number): number {
