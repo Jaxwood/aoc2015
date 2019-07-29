@@ -11,4 +11,12 @@ describe('day15', () => {
       const actual = day15a(input.split('\r\n'));
       expect(actual).toBe(62842880);
   });
+  it('should find best reciepe for puzzle input', async () => {
+      const input = await fsReadfilePromise(
+        path.resolve(__dirname, 'input.txt'),
+        'utf-8'
+      );
+      const actual = day15a(input.split('\r\n'));
+      expect(actual).toBe(13882464);
+  });
 });
