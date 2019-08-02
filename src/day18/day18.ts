@@ -63,7 +63,6 @@ function tick(grid: Map<string, number>, exceptions: Map<string, boolean>): Map<
 
     if (exceptions.get(point) || false) {
       result.set(point, 1);
-      continue;
     }
   }
   return result;
