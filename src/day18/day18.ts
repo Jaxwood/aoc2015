@@ -1,7 +1,36 @@
-type Point = [number, number];
-
 export function day18a(input: string[], steps: number): number {
-  let grid: Map<string, number> = new Map<string, number>();
+  let grid: Map<string, number> = createGrid(input);
+  const exceptions = new Map<string, boolean>();
+
+  for (let s = 0; s < steps; s++) {
+    grid = tick(grid, exceptions);
+  }
+
+  return on(grid);
+}
+
+export function day18b(input: string[], steps: number): number {
+  let grid: Map<string, number> = createGrid(input);
+  const exceptions = new Map<string, boolean>();
+
+  const corners = [0, input.length - 1];
+  for (const top of corners) {
+    for (const bottom of corners) {
+      const key = `${top},${bottom}`;
+      exceptions.set(key, true);
+      grid.set(key, 1);
+    }
+  }
+
+  for (let s = 0; s < steps; s++) {
+    grid = tick(grid, exceptions);
+  }
+
+  return on(grid);
+}
+
+function createGrid(input: string[]) {
+  const grid: Map<string, number> = new Map<string, number>();
   for (let y = 0; y < input.length; y++) {
     const xs = input[y].split('');
     for (let x = 0; x < xs.length; x++) {
@@ -9,19 +38,15 @@ export function day18a(input: string[], steps: number): number {
       grid.set(`${x},${y}`, state);
     }
   }
-
-  for (let s = 0; s < steps; s++) {
-    grid = tick(grid);
-  }
-
-  return on(grid);
+  return grid;
 }
 
-function tick(grid: Map<string, number>): Map<string, number> {
+function tick(grid: Map<string, number>, exceptions: Map<string, boolean>): Map<string, number> {
   const result = new Map<string, number>();
   for (const point of grid.keys()) {
     const neighbors = getNeighbors(point, grid);
     const state = grid.get(point) || 0;
+
     if (state === 1) {
       if (neighbors === 2 || neighbors === 3) {
         result.set(point, 1);
@@ -34,6 +59,11 @@ function tick(grid: Map<string, number>): Map<string, number> {
       } else {
         result.set(point, 0);
       }
+    }
+
+    if (exceptions.get(point) || false) {
+      result.set(point, 1);
+      continue;
     }
   }
   return result;
