@@ -1,6 +1,6 @@
 import fsReadfilePromise from 'fs-readfile-promise';
 import path from 'path';
-import { day19a } from './day19';
+import { day19a, day19b } from './day19';
 describe('day19', () => {
   describe('a', () => {
     it('should find replacements', () => {
@@ -14,4 +14,10 @@ describe('day19', () => {
       expect(day19a(input.split('\r\n'), 'CRnCaSiRnBSiRnFArTiBPTiTiBFArPBCaSiThSiRnTiBPBPMgArCaSiRnTiMgArCaSiThCaSiRnFArRnSiRnFArTiTiBFArCaCaSiRnSiThCaCaSiRnMgArFYSiRnFYCaFArSiThCaSiThPBPTiMgArCaPRnSiAlArPBCaCaSiRnFYSiThCaRnFArArCaCaSiRnPBSiRnFArMgYCaCaCaCaSiThCaCaSiAlArCaCaSiRnPBSiAlArBCaCaCaCaSiThCaPBSiThPBPBCaSiRnFYFArSiThCaSiRnFArBCaCaSiRnFYFArSiThCaPBSiThCaSiRnPMgArRnFArPTiBCaPRnFArCaCaCaCaSiRnCaCaSiRnFYFArFArBCaSiThFArThSiThSiRnTiRnPMgArFArCaSiThCaPBCaSiRnBFArCaCaPRnCaCaPMgArSiRnFYFArCaSiThRnPBPMgAr')).toBe(509);
     });
   });
+  describe('b', () => {
+    it('should find target molecule in fewest steps', () => {
+      expect(day19b(['e => H', 'e => O', 'H => HO', 'H => OH', 'O => HH'], 'HOH')).toBe(3);
+      expect(day19b(['e => H', 'e => O', 'H => HO', 'H => OH', 'O => HH'], 'HOHOHO')).toBe(6);
+    })
+  })
 });

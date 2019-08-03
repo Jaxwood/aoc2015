@@ -11,6 +11,11 @@ export function day19a(input: string[], molecule: string): number {
   return _.uniq(result).length;
 }
 
+export function day19b(input: string[], molecule: string): number {
+  // always start with a single elektron 'e'
+  return 0;
+}
+
 function replace(result: string[], index: number, molecule: string, [from, to]: Replacement, ): string[] {
   if (index > molecule.length) {
     return result;
