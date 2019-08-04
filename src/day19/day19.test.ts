@@ -15,9 +15,18 @@ describe('day19', () => {
     });
   });
   describe('b', () => {
-    it('should find target molecule in fewest steps', () => {
+    it('should find HOH in fewest steps', () => {
       expect(day19b(['e => H', 'e => O', 'H => HO', 'H => OH', 'O => HH'], 'HOH')).toBe(3);
+    })
+    it('should find HOHOHO in fewest steps', () => {
       expect(day19b(['e => H', 'e => O', 'H => HO', 'H => OH', 'O => HH'], 'HOHOHO')).toBe(6);
     })
+    it('should find replacements from puzzle input', async () => {
+      const input = await fsReadfilePromise(
+        path.resolve(__dirname, 'input.txt'),
+        'utf-8'
+      );
+      expect(day19b(input.split('\r\n'), 'CRnCaSiRnBSiRnFArTiBPTiTiBFArPBCaSiThSiRnTiBPBPMgArCaSiRnTiMgArCaSiThCaSiRnFArRnSiRnFArTiTiBFArCaCaSiRnSiThCaCaSiRnMgArFYSiRnFYCaFArSiThCaSiThPBPTiMgArCaPRnSiAlArPBCaCaSiRnFYSiThCaRnFArArCaCaSiRnPBSiRnFArMgYCaCaCaCaSiThCaCaSiAlArCaCaSiRnPBSiAlArBCaCaCaCaSiThCaPBSiThPBPBCaSiRnFYFArSiThCaSiRnFArBCaCaSiRnFYFArSiThCaPBSiThCaSiRnPMgArRnFArPTiBCaPRnFArCaCaCaCaSiRnCaCaSiRnFYFArFArBCaSiThFArThSiThSiRnTiRnPMgArFArCaSiThCaPBCaSiRnBFArCaCaPRnCaCaPMgArSiRnFYFArCaSiThRnPBPMgAr')).toBe(509);
+    });
   })
 });
