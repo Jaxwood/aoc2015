@@ -13,18 +13,23 @@
   },
   "author": "Jacob Lorenzen",
   "license": "MIT",
+  "dependencies": {
+    "fs-readfile-promise": "^3.0.1",
+    "lodash": "^4.17.15",
+    "priorityqueuejs": "^1.0.0"
+  },
   "devDependencies": {
     "@types/fs-readfile-promise": "^3.0.0",
-    "@types/jest": "^24.0.13",
-    "@types/lodash": "^4.14.133",
-    "@types/node": "^12.0.2",
-    "fs-readfile-promise": "^3.0.1",
-    "jest": "^24.8.0",
-    "ts-jest": "^24.0.2",
-    "tslint": "^5.16.0",
-    "tslint-config-airbnb": "^5.11.1",
+    "@types/jest": "^24.9.1",
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^12.12.32",
+    "@types/priorityqueuejs": "^1.0.1",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.3.0",
+    "tslint": "^5.20.1",
+    "tslint-config-airbnb": "^5.11.2",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.4.5"
+    "typescript": "^3.8.3"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -37,13 +42,5 @@
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     }
-  },
-  "dependencies": {
-    "@types/priorityqueuejs": "^1.0.1",
-    "fastpriorityqueue": "^0.6.3",
-    "fs-readfile-promise": "^3.0.1",
-    "lodash": "^4.17.15",
-    "npm": "^6.10.2",
-    "priorityqueuejs": "^1.0.0"
   }
 }

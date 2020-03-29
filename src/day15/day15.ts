@@ -136,7 +136,7 @@ function parseInput(input: string[]): Ingridient[] {
   for (const line of input) {
     const match = line.match(reg);
     if (match) {
-      const [_, name, capacity, durability, flavor, texture, calories] = match;
+      const [, name, capacity, durability, flavor, texture, calories] = match;
       ingridients.push(
         new Ingridient(
           name,

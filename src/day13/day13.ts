@@ -56,7 +56,7 @@ function parseInput(input: string[]): Map<string, Person[]> {
   for (const line of input) {
     const match = line.match(reg);
     if (match) {
-      const [_, source, type, score, target] = match;
+      const [, source, type, score, target] = match;
       const persons = seatingPreferences.get(source) || [];
       const modifier = type === 'gain' ? 1 : -1;
       persons.push([

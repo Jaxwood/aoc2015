@@ -42,7 +42,7 @@ function parseInput(input: string[]): Reindeer[] {
   for (const line of input) {
     const match = line.match(reg);
     if (match) {
-      const [_, source, speed, time, rest] = match;
+      const [, source, speed, time, rest] = match;
       result.push(new Reindeer(source, parseInt(speed, 10), parseInt(time, 10), parseInt(rest, 10)));
     }
   }

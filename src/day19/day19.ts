@@ -1,5 +1,5 @@
-import PriorityQueue from 'priorityqueuejs';
 import * as _ from 'lodash';
+import PriorityQueue from 'priorityqueuejs';
 
 type Replacement = [string, string];
 
@@ -63,7 +63,7 @@ function parse(input: string[]): Replacement[] {
   for (const line of input) {
     const match = line.match(reg);
     if (match) {
-      const [_, from, to] = match;
+      const [, from, to] = match;
       replacements.push([from, to]);
     }
   }
