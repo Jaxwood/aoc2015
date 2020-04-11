@@ -1,10 +1,14 @@
 import * as _ from 'lodash';
 
 export class Player {
-  constructor(private hp: number, private armor: number, private dmg: number) {}
+  private readonly default: number;
 
-  public heal(amount: number): void {
-    this.hp = amount;
+  constructor(private hp: number, private armor: number, private dmg: number) {
+    this.default = hp;
+  }
+
+  public heal(): void {
+    this.hp = this.default;
   }
 
   public equip(equipment: Equipment): void {
@@ -56,12 +60,17 @@ const misc: Equipment[] = [
   { name: 'def +3', cost: 80, dmg: 0, armor: 3 },
 ];
 
+const defaultEquipment = { name: '', dmg: 0, armor: 0, cost: 0 };
+
 function combine(equipment: Equipment[]): Equipment {
-  const cost = equipment.reduce((acc, n) => (acc += n.cost), 0);
-  const dmg = equipment.reduce((acc, n) => (acc += n.dmg), 0);
-  const armor = equipment.reduce((acc, n) => (acc += n.armor), 0);
-  const name = equipment.reduce((acc, n) => (acc += n.name + ' '), '');
-  return { name, cost, dmg, armor };
+  return equipment.reduce(({ name, cost, dmg, armor }, n) => {
+    return {
+      armor: armor + n.armor,
+      cost: cost + n.cost,
+      dmg: dmg + n.dmg,
+      name: name + n.name,
+    };
+  }, defaultEquipment);
 }
 
 function allEquipments(): Equipment[] {
@@ -81,40 +90,46 @@ function allEquipments(): Equipment[] {
 function fight(
   player: Player,
   boss: Player,
-  sets: Equipment[],
   predicate: (b: boolean, p: boolean) => boolean
-): Equipment[] {
-  const result: Equipment[] = [];
-  while (sets.length > 0) {
-    player.heal(100);
-    boss.heal(109);
-    const candidate = sets.pop();
-    let alive = true;
-    if (candidate) {
-      player.equip(candidate);
-      while (alive) {
-        const bossAlive = boss.hitBy(player);
-        const playerAlive = player.hitBy(boss);
-        if (predicate(bossAlive, playerAlive)) {
-          result.push(candidate);
-        }
-        alive = bossAlive && playerAlive;
-      }
+): boolean {
+  let alive = true;
+  while (alive) {
+    const bossAlive = boss.hitBy(player);
+    const playerAlive = player.hitBy(boss);
+    if (predicate(bossAlive, playerAlive)) {
+      return true;
     }
+    alive = bossAlive && playerAlive;
   }
-  return result;
+  return false;
 }
 
 export function day21a(boss: Player): number {
   const player: Player = new Player(100, 0, 0);
   const sets = allEquipments();
-  const results = fight(player, boss, sets, (b, p) => !b);
+  const results: Equipment[] = [];
+  for (const equipment of sets) {
+    player.equip(equipment);
+    player.heal();
+    boss.heal();
+    if (fight(player, boss, (b, p) => !b)) {
+      results.push(equipment);
+    }
+  }
   return _.minBy(results, (eq) => eq.cost)?.cost || 0;
 }
 
 export function day21b(boss: Player): number {
   const player: Player = new Player(100, 0, 0);
   const sets = allEquipments();
-  const results = fight(player, boss, sets, (b, p) => !p);
+  const results: Equipment[] = [];
+  for (const equipment of sets) {
+    player.equip(equipment);
+    player.heal();
+    boss.heal();
+    if (fight(player, boss, (b, p) => !p)) {
+      results.push(equipment);
+    }
+  }
   return _.maxBy(results, (eq) => eq.cost)?.cost || 0;
 }
