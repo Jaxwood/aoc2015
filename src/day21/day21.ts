@@ -50,8 +50,8 @@ const armors: Equipment[] = [
 ];
 
 const misc: Equipment[] = [
-  { name: 'ring', cost: 0, dmg: 0, armor: 0 },
-  { name: 'ring', cost: 0, dmg: 0, armor: 0 },
+  { name: 'ring of charisma', cost: 0, dmg: 0, armor: 0 },
+  { name: 'ring of wisdom', cost: 0, dmg: 0, armor: 0 },
   { name: 'dmg +1', cost: 25, dmg: 1, armor: 0 },
   { name: 'dmg +2', cost: 50, dmg: 2, armor: 0 },
   { name: 'dmg +3', cost: 100, dmg: 3, armor: 0 },
@@ -68,7 +68,7 @@ function combine(equipment: Equipment[]): Equipment {
       armor: armor + n.armor,
       cost: cost + n.cost,
       dmg: dmg + n.dmg,
-      name: name + n.name,
+      name: name + ' ' + n.name,
     };
   }, defaultEquipment);
 }
