@@ -7,31 +7,25 @@ function* valueAt(row: number, column: number): Iterator<number> {
   let r = 2;
   let c = 1;
   yield val;
-  while(true) {
+  while (true) {
     val = calculate(val);
     if (r === row && c === column) {
       return val;
     }
     yield val;
-    if (r >= c) {
+    if (r === 1) {
+      r = c + 1;
+      c = 1;
+    } else {
       r--;
       c++;
-    }
-    else if (c > r) {
-      if (r === 1) {
-        r = c + 1;
-        c = 1;
-      } else {
-        r--;
-        c++;
-      }
     }
   }
 }
 
 export function day25(row: number, column: number): number {
   const iterator = valueAt(row, column);
-  while(true) {
+  while (true) {
     const result = iterator.next();
     if (result.done) {
       return result.value;
