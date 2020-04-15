@@ -2,6 +2,6 @@
 
 # Advent of Code 2015
 
-Solutions for [https://adventofcode.com/2015] written in typescript.
+Solutions for [advent of code 2015](https://adventofcode.com/2015) written in typescript.
 
 ![2015](2015.gif)
