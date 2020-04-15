@@ -9,10 +9,10 @@ function* valueAt(row: number, column: number): Iterator<number> {
   yield val;
   while(true) {
     val = calculate(val);
-    yield val;
     if (r === row && c === column) {
-      break;
+      return val;
     }
+    yield val;
     if (r >= c) {
       r--;
       c++;
@@ -31,12 +31,10 @@ function* valueAt(row: number, column: number): Iterator<number> {
 
 export function day25(row: number, column: number): number {
   const iterator = valueAt(row, column);
-  let previous = 0;
   while(true) {
     const result = iterator.next();
     if (result.done) {
-      return previous;
+      return result.value;
     }
-    previous = result.value;
   }
 }
