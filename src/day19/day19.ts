@@ -1,61 +1,57 @@
 import * as _ from 'lodash';
-import PriorityQueue from 'priorityqueuejs';
 
 type Replacement = [string, string];
+type Mutation = [string, number];
 
 const reg = new RegExp(/(\w+) => (\w+)/);
+
 export function day19a(input: string[], molecule: string): number {
   const replacements: Replacement[] = parse(input);
-  let result: string[] = [];
-  for (const replacement of replacements) {
-    result = replace(result, 0, molecule, replacement);
-  }
+  const result = replace(replacements, molecule);
   return _.uniq(result).length;
 }
 
-type Mutation = [string, number];
-
 export function day19b(input: string[], molecule: string): number {
-  const replacements: Replacement[] = parse(input);
-  // always start with a single elektron 'e'
-  const queue = new PriorityQueue<Mutation>((a, b) => {
-    return b[1] - a[1];
-  });
-  queue.enq(['e', 0]);
-  const visited: string[] = [];
+  const replacements: Replacement[] = parse(input).map(([a, b]) => [b, a]);
+  const queue: Mutation[] = [[molecule, 0]];
 
-  while(!queue.isEmpty()) {
-    let result: string[] = [];
-    const [candidate, mutation] = queue.deq();
-    visited.push(candidate);
-    if (candidate === molecule) {
-      return mutation;
-    }
-    const next = mutation + 1;
-    for (const replacement of replacements) {
-      result = replace(result, 0, candidate, replacement);
-    }
-    // surrogates = surrogates.concat(_.uniqWith(tmp, _.isEqual));
+  while(queue.length > 0) {
+    const [candidate, mutation] = queue.pop() || ['', 0];
+    const result = replace(replacements, candidate);
     for (const res of result) {
-      if (visited.indexOf(res) === -1) {
-        queue.enq([res, next]);
+      if (res === 'e') {
+        return mutation + 1;
       }
+      queue.push([res, mutation + 1]);
     }
   }
 
   return 0;
 }
 
-function replace(result: string[], index: number, molecule: string, [from, to]: Replacement, ): string[] {
-  if (index > molecule.length) {
-    return result;
+function replace(replacements: Replacement[], molecule: string): string[] {
+  const result: string[] = [];
+  for (let i = 0; i < molecule.length; i++) {
+    const letter = molecule[i];
+    const candidates = replacements.filter(([from, to]) => from.startsWith(letter));
+    for (const [from, to] of candidates) {
+      if (i + from.length > molecule.length) {
+        continue;
+      }
+      let match = true;
+      for (let j = 0; j < from.length; j++) {
+        if (molecule[i+j] !== from[j]) {
+          match = false;
+        }
+      }
+      if (match) {
+        const left = molecule.substr(0, i);
+        const right = molecule.substr(i + from.length);
+        result.push(left.concat(to).concat(right));
+      }
+    }
   }
-  if (molecule.indexOf(from, index) === index) {
-    const left = molecule.substr(0, index);
-    const right = molecule.substr(index + from.length);
-    result.push(left.concat(to).concat(right));
-  }
-  return replace(result, ++index, molecule, [from, to]);
+  return result;
 }
 
 function parse(input: string[]): Replacement[] {
