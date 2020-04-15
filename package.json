@@ -15,15 +15,13 @@
   "license": "MIT",
   "dependencies": {
     "fs-readfile-promise": "^3.0.1",
-    "lodash": "^4.17.15",
-    "priorityqueuejs": "^1.0.0"
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "@types/fs-readfile-promise": "^3.0.0",
     "@types/jest": "^24.9.1",
     "@types/lodash": "^4.14.149",
     "@types/node": "^12.12.32",
-    "@types/priorityqueuejs": "^1.0.1",
     "jest": "^24.9.0",
     "ts-jest": "^24.3.0",
     "tslint": "^5.20.1",

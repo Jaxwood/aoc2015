@@ -1,4 +1,5 @@
 import fsReadfilePromise from 'fs-readfile-promise';
+import os from 'os';
 import path from 'path';
 import { day14a, day14b } from './day14';
 
@@ -9,7 +10,7 @@ describe('day14', () => {
         path.resolve(__dirname, 'a.txt'),
         'utf-8'
       );
-      const actual = day14a(input.split('\r\n'), 1000);
+      const actual = day14a(input.split(os.EOL), 1000);
       expect(actual).toBe(1120);
     });
 
@@ -18,7 +19,7 @@ describe('day14', () => {
         path.resolve(__dirname, 'input.txt'),
         'utf-8'
       );
-      const actual = day14a(input.split('\r\n'), 2503);
+      const actual = day14a(input.split(os.EOL), 2503);
       expect(actual).toBe(2655);
     });
   });
@@ -29,7 +30,7 @@ describe('day14', () => {
         path.resolve(__dirname, 'a.txt'),
         'utf-8'
       );
-      const actual = day14b(input.split('\r\n'), 1000);
+      const actual = day14b(input.split(os.EOL), 1000);
       expect(actual).toBe(689);
     });
 
@@ -38,7 +39,7 @@ describe('day14', () => {
         path.resolve(__dirname, 'input.txt'),
         'utf-8'
       );
-      const actual = day14b(input.split('\r\n'), 2503);
+      const actual = day14b(input.split(os.EOL), 2503);
       expect(actual).toBe(1059);
     });
   });

@@ -1,4 +1,5 @@
 import fsReadfilePromise from 'fs-readfile-promise';
+import os from 'os';
 import path from 'path';
 import { day15a, day15b } from './day15';
 
@@ -9,7 +10,7 @@ describe('day15', () => {
         path.resolve(__dirname, 'a.txt'),
         'utf-8'
       );
-      const actual = day15a(input.split('\r\n'));
+      const actual = day15a(input.split(os.EOL));
       expect(actual).toBe(62842880);
     });
     it('should find best reciepe for 100 teaspoons with puzzle input', async () => {
@@ -17,7 +18,7 @@ describe('day15', () => {
         path.resolve(__dirname, 'input.txt'),
         'utf-8'
       );
-      const actual = day15a(input.split('\r\n'));
+      const actual = day15a(input.split(os.EOL));
       expect(actual).toBe(13882464);
     });
   });
@@ -28,7 +29,7 @@ describe('day15', () => {
         path.resolve(__dirname, 'a.txt'),
         'utf-8'
       );
-      const actual = day15b(input.split('\r\n'));
+      const actual = day15b(input.split(os.EOL));
       expect(actual).toBe(57600000);
     });
 
@@ -37,7 +38,7 @@ describe('day15', () => {
         path.resolve(__dirname, 'input.txt'),
         'utf-8'
       );
-      const actual = day15b(input.split('\r\n'));
+      const actual = day15b(input.split(os.EOL));
       expect(actual).toBe(11171160);
     });
   });

@@ -1,4 +1,5 @@
 import fsReadfilePromise from 'fs-readfile-promise';
+import os from 'os';
 import path from 'path';
 import { day23 } from './day23';
 
@@ -9,7 +10,7 @@ describe('day23', () => {
         path.resolve(__dirname, 'input.txt'),
         'utf-8'
       );
-      expect(day23(input.split('\r\n'), 0)).toBe(184);
+      expect(day23(input.split(os.EOL), 0)).toBe(184);
     });
   });
   describe('b', () => {
@@ -18,7 +19,7 @@ describe('day23', () => {
         path.resolve(__dirname, 'input.txt'),
         'utf-8'
       );
-      expect(day23(input.split('\r\n'), 1)).toBe(231);
+      expect(day23(input.split(os.EOL), 1)).toBe(231);
     });
   });
 });

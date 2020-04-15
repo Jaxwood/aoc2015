@@ -1,4 +1,5 @@
 import fsReadfilePromise from 'fs-readfile-promise';
+import os from 'os';
 import path from 'path';
 import { day7a } from './day7';
 
@@ -30,7 +31,7 @@ describe('day7', () => {
       path.resolve(__dirname, 'input.txt'),
       'utf-8'
     );
-    const actual = day7a(input.split('\r\n'));
+    const actual = day7a(input.split(os.EOL));
     expect(actual.get('a')).toBe(3176);
   });
 });

@@ -1,5 +1,6 @@
 // tslint:disable: quotemark
 import fsReadfilePromise from 'fs-readfile-promise';
+import os from 'os';
 import path from 'path';
 import { day8a, day8b } from './day8';
 
@@ -9,7 +10,7 @@ describe('day8', () => {
       path.resolve(__dirname, 'a.txt'),
       'utf-8'
     );
-    const actual = day8a(input.split('\r\n'));
+    const actual = day8a(input.split(os.EOL));
     expect(actual).toBe(12);
   });
 
@@ -18,7 +19,7 @@ describe('day8', () => {
       path.resolve(__dirname, 'input.txt'),
       'utf-8'
     );
-    const actual = day8a(input.split('\r\n'));
+    const actual = day8a(input.split(os.EOL));
     expect(actual).toBe(1350);
   });
 
@@ -27,7 +28,7 @@ describe('day8', () => {
       path.resolve(__dirname, 'a.txt'),
       'utf-8'
     );
-    const actual = day8b(input.split('\r\n'));
+    const actual = day8b(input.split(os.EOL));
     expect(actual).toBe(19);
   });
 
@@ -36,7 +37,7 @@ describe('day8', () => {
       path.resolve(__dirname, 'input.txt'),
       'utf-8'
     );
-    const actual = day8b(input.split('\r\n'));
+    const actual = day8b(input.split(os.EOL));
     expect(actual).toBe(2085);
   });
 });
