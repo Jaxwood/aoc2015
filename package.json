@@ -20,7 +20,7 @@
   "devDependencies": {
     "@types/fs-readfile-promise": "^3.0.0",
     "@types/jest": "^30.0.0",
-    "@types/lodash": "^4.17.20",
+    "@types/lodash": "^4.17.26",
     "@types/node": "^26.6.4",
     "jest": "^30.5.2",
     "ts-jest": "^29.4.14",
